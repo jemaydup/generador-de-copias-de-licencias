@@ -7,16 +7,22 @@ validar_folder data
 }
 
 validar_folder () {
-if [ -d ./$1 ]; then
-{
-echo "la carpeta $1 existe" >> $PWD/INIT-$dia.log
-}
+if [ -e $@ ]; then
+   if [ -d ./$1 ]; then
+    {   
+        echo "la carpeta $1 existe" >> $PWD/INIT-$dia.log
+    }
+    else
+    {
+        mkdir ./$1
+    }
+    fi
 else
-{
-mkdir ./$1
-}
+echo -e $(date +'%Y-%m-%d--%H%M%S') "# se deben pasar parametros" >> $PWD/log/$dia.log
+   exit 1
 fi
 }
+
 
 
 
@@ -25,16 +31,16 @@ case "${1}" in
     'full' | 'FULL' | 'Full')
         #Todo
         echo "trayendo todos los archivos de licencia" >> $PWD/log/$dia.log
-      	export ListaPic=plpicpacapp66,plpicpacapp67,plpicestapp57,plpicestapp58
+      	export Lista=plpicpacapp66,plpicpacapp67,plpicestapp57,plpicestapp58
         ;;
     'pacheco' | 'PACECHO'|'Pacheco')
         echo "trayendo los archivos de licencia de Pacheco" >> $PWD/log/$dia.log
-        export ListaPic=plpicpacapp66,plpicpacapp67
+        export Lista=plpicpacapp66,plpicpacapp67
         ##Pacheco
         ;;
     'Estomba' | 'estomba' | 'ESTOMBA')
         echo "trayendo los archivos de licencia de Estomba" >> $PWD/log/$dia.log
-        export ListaPic=plpicestapp57,plpicestapp58
+        export Lista=plpicestapp57,plpicestapp58
         ##Estomba
         ;;
     *)
